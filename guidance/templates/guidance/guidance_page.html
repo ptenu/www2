@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load wagtailcore_tags %}
+
+{% block content %}
+    <ptu-page-header headline='{{ page.title }}'
+                     category="Guidance"
+                     category-colour="accent"
+                     category-href="/guidance"
+                     topic="{{ page.get_parent.title }}"
+                     topic-href="{% pageurl page.get_parent %}"
+    >
+        {{ page.subtitle }}
+    </ptu-page-header>
+
+    <ptu-section sidebar="right" class="top-padding">
+        <aside slot="sidebar">
+            <h6>More on this topic</h6>
+            <ul class="list">
+                {% for child in page.get_topic_pages %}
+                    <li>
+                        <a href="{% pageurl child %}">{{ child.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </aside>
+        <section class="prose">
+            {{ page.body|richtext }}
+        </section>
+    </ptu-section>
+
+    <ptu-section class="prose">
+        <p class="card">
+            <small>
+                <strong>The advice and information available here is not intended as legal advice.</strong>
+                <br /> Peterborough Tenants Union does not guarantee the correctness or validity
+                of the information presented here.
+                We recommend that you always seek qualified legal advice before taking any action.
+            </small>
+        </p>
+    </ptu-section>
+{% endblock content %}

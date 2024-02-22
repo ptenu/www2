@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Get in touch{% endblock %}
+
+{% block content %}
+    <ptu-page-header headline="Get in touch" category="Contact"></ptu-page-header>
+
+    <ptu-section sidebar="right" class="top-padding">
+        <aside slot="sidebar" class="card prose"
+               style="margin-bottom: var(--layout-gap); background-color: var(--colour-red-100); color: var(--colour-red-800)">
+            <h3 style="border: none; margin-top: .5em; padding-bottom: 0">In an emergency <br/> call 999</h3>
+            <p>
+                An emergency is if someone's life is in danger or someone
+                is committing a crime.
+            </p>
+            <p>
+                If you landlord (or anyone else) has turned up at your home
+                <strong>without a court order and bailiffs</strong>,
+                this is an emergency and you should call 999 and ask for the police.
+            </p>
+        </aside>
+        <article class="prose">
+            <p>
+                The Peterborough Tenants Union is run by volunteers, so it can take us
+                some time to reply - however we will prioritise urgent cases and support
+                requests.
+            </p>
+            <h2>Send us a message</h2>
+            <p>
+                If you have a general enquiry and wish to send us a message, you can either
+                email us or use our contact form.
+            </p>
+            <dl>
+                <dt>Main email</dt>
+                <dd>
+                    <a href="mailto:contact@peterboroughtenants.org">contact@peterboroughtenants.org</a>
+                </dd>
+
+                <dt>Support email</dt>
+                <dd>
+                    <a href="mailto:support@peterboroughtenants.org">support@peterboroughtenants.org</a>
+                </dd>
+            </dl>
+
+            <section class="top-padding">
+                <a class="button primary-button" href="/contact/form">Send a message</a>
+            </section>
+
+            <h2>Give us a call</h2>
+            <p>
+                If you need to speak to someone about your situation, or your membership, you can
+                call us on the numbers below.
+            </p>
+            <p>
+                Please bear in mind that we can only answer if there is an available volunteer,
+                however we will call back any missed calls.
+            </p>
+            <dl>
+                <dt>Freephone number</dt>
+                <dd>
+                    <a href="tel:+448007074202">0800 707 42 02</a>
+                </dd>
+
+                <dt>Local number</dt>
+                <dd>
+                    <a href="tel:+441733833083">01733 833 083</a>
+                </dd>
+            </dl>
+
+            <h2>Make a request for support</h2>
+            <p>
+                If you need help with your case, you can fill out our
+                support request form, and we'll get back in touch as soon
+                as we can to get more information.
+            </p>
+            <p>
+                <a class="button primary-button" href="/help">Request support</a>
+            </p>
+        </article>
+    </ptu-section>
+
+{% endblock %}

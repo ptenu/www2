@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load wagtailcore_tags %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+{% block content %}
+    <ptu-page-header headline='{{ page.title }}'
+    ></ptu-page-header>
+
+    <ptu-section sidebar="right" class="top-padding">
+        <aside slot="sidebar">
+            <ul class="list">
+                {% for child in page.get_children.live %}
+                    <li>
+                        <a href="{% pageurl child %}">{{ child.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {% if page.show_siblings %}
+                <ul class="list">
+                    <li>
+                        {% with parent=page.get_parent %}
+                            <a href="{% pageurl parent %}">{{ parent.title }}</a>
+                        {% endwith %}
+                    </li>
+                    {% for child in page.get_siblings.live %}
+                        <li>
+                            <a href="{% pageurl child %}">{{ child.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </aside>
+        <section class="prose">
+            {{ page.body|richtext }}
+        </section>
+    </ptu-section>
+{% endblock content %}

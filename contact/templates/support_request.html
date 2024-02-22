@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% block title %}Open a new support request{% endblock %}
+
+{% block content %}
+    <ptu-page-header headline="Request the union's help" category="Support" category-colour="blue" category-href="/help"
+                     topic="Support request"></ptu-page-header>
+
+    {% if complete %}
+        <ptu-section class="top-padding" sidebar="right">
+            <ptu-complete headline="Request received" status='Success' colour='green'>
+                Your support request has been received. You should get an email conformation shortly, and we'll
+                get back to you as soon as we can.
+            </ptu-complete>
+            <p>Go back to the <a href="/">Home page</a>.</p>
+        </ptu-section>
+    {% endif %}
+
+    {% if not complete %}
+        <ptu-section class="top-padding" sidebar="right">
+            <article class="prose">
+                <p>
+                    Use the form below to open a new support request.
+                    We'll get back in touch with you as soon as possible.
+                </p>
+            </article>
+
+        </ptu-section>
+        <ptu-section>
+            {% with data=form.cleaned_data %}
+                <ptu-form method="POST" action="">
+                    {% csrf_token %}
+
+                    <ptu-form-row label="Name" inline>
+                        {% if form.given_name.errors %}
+                            <aside class="card top-padding errors">
+                                {{ form.given_name.errors }}
+                            </aside>
+                        {% endif %}
+                        <label>
+                            Given name
+                            <input name="given_name" type="text" value="{{ data.given_name }}">
+                        </label>
+                        <label>
+                            Family name
+                            <input name="family_name" type="text" value="{{ data.family_name }}">
+                        </label>
+
+                    </ptu-form-row>
+
+                    <ptu-form-row label="Membership number" for="membership_number"
+                                  description="Leave blank if you don't know">
+                        {% if form.membership_number.errors %}
+                            <aside class="card top-padding errors">
+                                {{ form.membership_number.errors }}
+                            </aside>
+                        {% endif %}
+                        <input id="membership_number" name="membership_number" type="text" style="max-width: 11ch"
+                               value="{{ data.membership_number }}">
+                    </ptu-form-row>
+
+
+                    <ptu-form-row label="Email address" for="email">
+                        {% if form.email.errors %}
+                            <aside class="card top-padding errors">
+                                {{ form.email.errors }}
+                            </aside>
+                        {% endif %}
+                        <input id="email" name="email" type="email" value="{{ data.email }}">
+                    </ptu-form-row>
+
+                    <ptu-form-row label="Telephone number" for="tel">
+                        {% if form.telephone.errors %}
+                            <aside class="card top-padding errors">
+                                {{ form.telephone.errors }}
+                            </aside>
+                        {% endif %}
+                        <input id="tel" name="telephone" type="text" inputmode="tel" value="{{ data.telephone }}"
+                               style="max-width: 20ch">
+                    </ptu-form-row>
+
+                    <ptu-form-row label="What is your situation" description="Tick all that apply">
+                        {% if form.situation.errors %}
+                            <aside class="card top-padding errors">
+                                {{ form.situation.errors }}
+                            </aside>
+                        {% endif %}
+                        <label class="option">
+                            <input type="checkbox" name="situation" value="eviction"
+                                   {% if "eviction" in data.situation %}checked{% endif %}>
+                            Eviction
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="situation" value="damage"
+                                   {% if "damage" in data.situation %}checked{% endif %}>
+                            Damage or disrepair
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="situation" value="rent"
+                                   {% if "rent" in data.situation %}checked{% endif %}>
+                            Problems with rent
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="situation" value="overcrowding"
+                                   {% if "overcrowding" in data.situation %}checked{% endif %}>
+                            Overcrowding
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="situation" value="deposit"
+                                   {% if "deposit" in data.situation %}checked{% endif %}>
+                            Deposit dispute
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="situation" value="other"
+                                   {% if "other" in data.situation %}checked{% endif %}>
+                            Something else
+                        </label>
+                    </ptu-form-row>
+
+                    <ptu-form-row label="Postcode" inline>
+                        {% if form.postcode_1.errors or form.postcode_2.errors %}
+                            <aside class="card top-padding errors">
+                                {{ form.postcode_1.errors }}
+                                {{ form.postcode_2.errors }}
+                            </aside>
+                        {% endif %}
+                        <label>
+                            e.g. PE1
+                            <input name="postcode_1" type="text" value="{{ data.postcode_1 }}" style="max-width: 10ch">
+                        </label>
+                        <label>
+                            e.g. 1AA
+                            <input name="postcode_2" type="text" value="{{ data.postcode_2 }}" style="max-width: 10ch">
+                        </label>
+                    </ptu-form-row>
+
+                    <section>
+                        <div class="cf-turnstile" data-sitekey="0x4AAAAAAASRXdlCUTEtY2SK"></div>
+                    </section>
+
+                    <footer class="prose">
+                        <p>
+                            When you click save, this form will be sent to our support volunteers.
+                        </p>
+                        <p>
+                            By clicking save you agree to our data protection policies and acknowledge that we will
+                            process
+                            your
+                            information in order to provide you with support and advice.
+                        </p>
+                    </footer>
+                </ptu-form>
+            {% endwith %}
+        </ptu-section>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    {% if not complete %}
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    {% endif %}
+{% endblock %}

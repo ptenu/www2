@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load wagtailcore_tags %}
+
+{% block extra_css %}
+{% endblock extra_css %}
+
+{% block content %}
+    <ptu-hero>
+        <h1 class='title'>Fighting for Renters. <br> Together, We Win.</h1>
+        <p><b>Peterborough Tenants Union </b> — like a trade union, but for renters.</p>
+        <p>We stand up for each other and campaign to get a better deal for everyone.</p>
+    </ptu-hero>
+
+    <ptu-section style="margin-top: var(--layout-gap)">
+        <ptu-grid>
+            <ptu-hero-button title="Membership" link="Join today" href="/join">
+                <svg class="double" slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                          d="M21 1V13C21 17.9706 16.9706 22 12 22C7.02944 22 3 17.9706 3 13C3 9.72064 4.75393 6.85093 7.37488 5.27777L14 1.453V4.223L21 1ZM19 4.122L12 7.34567V4.916L8.59717 6.88088C6.47212 8.06588 5.10056 10.2673 5.00531 12.7258L5 13C5 16.866 8.13401 20 12 20C15.7855 20 18.8691 16.9952 18.9959 13.2407L19 13V4.122ZM12 8C14.7614 8 17 10.2386 17 13C17 15.7614 14.7614 18 12 18C9.23858 18 7 15.7614 7 13C7 10.2386 9.23858 8 12 8ZM12 10C10.3431 10 9 11.3431 9 13C9 14.6569 10.3431 16 12 16C13.6569 16 15 14.6569 15 13C15 11.3431 13.6569 10 12 10Z"></path>
+                </svg>
+                We are run by our members, for our members. Sign up to get support and stand together
+                with other renters.
+            </ptu-hero-button>
+            <ptu-hero-button title="Advice" link="Read more" href="/guidance">
+                <svg class="double" slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                          d="M13 21V23.5L10 21.5L7 23.5V21H6.5C4.567 21 3 19.433 3 17.5V5C3 3.34315 4.34315 2 6 2H20C20.5523 2 21 2.44772 21 3V20C21 20.5523 20.5523 21 20 21H13ZM7 19V17H13V19H19V16H6.5C5.67157 16 5 16.6716 5 17.5C5 18.3284 5.67157 19 6.5 19H7ZM7 5V7H9V5H7ZM7 8V10H9V8H7ZM7 11V13H9V11H7Z"></path>
+                </svg>
+                Get guidance and advice on common situations on our help pages.
+            </ptu-hero-button>
+            <ptu-hero-button title="Get help" link="Request support" href="help">
+                <svg class="double" slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                          d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM7.19709 14.682L5.02243 16.8555C5.52665 17.5788 6.14045 18.2199 6.83975 18.7549L7.14462 18.9777L9.31803 16.8029C8.51078 16.3512 7.82909 15.7018 7.33848 14.9203L7.19709 14.682ZM16.8029 14.682C16.3512 15.4892 15.7018 16.1709 14.9203 16.6615L14.682 16.8029L16.8555 18.9776C17.5787 18.4734 18.2198 17.8596 18.7549 17.1604L18.9776 16.8555L16.8029 14.682ZM12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8ZM7.14462 5.02232C6.42133 5.52656 5.78012 6.14039 5.24506 6.83973L5.02232 7.14462L7.19709 9.31803C7.64883 8.51078 8.2982 7.82909 9.07969 7.33848L9.31803 7.19709L7.14462 5.02232ZM16.8555 5.02243L14.682 7.19709C15.4892 7.64883 16.1709 8.2982 16.6615 9.07969L16.8029 9.31803L18.9777 7.14462C18.4735 6.42137 17.8597 5.7802 17.1604 5.24516L16.8555 5.02243Z"></path>
+                </svg>
+                We provide support to members when they're having issues. If you need help, get in touch.
+            </ptu-hero-button>
+        </ptu-grid>
+    </ptu-section>
+
+    <ptu-section style="margin-top: var(--layout-gap)">
+        <hgroup>
+            <h2>News</h2>
+        </hgroup>
+        <ptu-grid>
+            {% for post in page.get_news %}
+                <article class="card">
+                    <header style="font-size: var(--fs-h5); font-weight: bold; margin: .21em 0">
+                        <a href="{% pageurl post %}">
+                            {{ post.title }}
+                        </a>
+                    </header>
+                    <p style="font-size: var(--fs-small)">{{ post.specific.preview }}</p>
+                </article>
+            {% endfor %}
+        </ptu-grid>
+        <footer class="top-padding">
+            <a href="/news">More news posts</a>
+        </footer>
+    </ptu-section>
+
+    <ptu-section>
+        <hgroup>
+            <h2>Information</h2>
+        </hgroup>
+        <section class="prose dont-nest-lists columns">
+            <ul>
+                <li>
+                    <a href="/join">Becoming a member</a>
+                </li>
+                <li>
+                    <a href="/about">About the Union</a>
+                </li>
+                <li>
+                    <a href="/contact">Get in touch</a>
+                </li>
+
+                {% for gt in page.get_topics %}
+                    <li>
+                        <a href="{% pageurl gt %}">{{ gt.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+    </ptu-section>
+{% endblock content %}

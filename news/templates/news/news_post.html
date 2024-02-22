@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load wagtailcore_tags %}
+
+{% block content %}
+    <ptu-page-header headline='{{ page.title }}'
+                     category="News"
+                     category-colour="red"
+                     category-href="/news"
+    >
+        <small>{{ page.created_at }}</small>
+    </ptu-page-header>
+
+    <ptu-section class="top-padding" sidebar="right">
+        <aside slot="sidebar">
+        <h5>Related articles</h5>
+            <ul class="list">
+                {% for post in page.get_related_posts %}
+                    <li class="card">
+                        <header style="font-size: var(--fs-h5); font-weight: bold; margin: .21em 0">
+                            <a href="{% pageurl post %}">
+                                {{ post.title }}
+                            </a>
+                        </header>
+                        <p style="font-size: var(--fs-small)">{{ post.specific.preview }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </aside>
+        <section class="prose">
+            {{ page.body|richtext }}
+        </section>
+    </ptu-section>
+{% endblock content %}

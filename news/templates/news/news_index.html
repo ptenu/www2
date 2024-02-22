@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load wagtailcore_tags %}
+
+{% block content %}
+    <ptu-page-header headline='{{ page.title }}'></ptu-page-header>
+
+    <ptu-section class="top-padding">
+        <ul class="list">
+            {% for post in page.get_news_posts %}
+                <li>
+                    <ptu-chip>{{ post.specific.created_at }}</ptu-chip>
+                    <header style="font-size: var(--fs-h3); font-weight: bold; margin: .21em 0">
+                        <a href="{% pageurl post %}">
+                            {{ post.title }}
+                        </a>
+                    </header>
+                    <p>{{ post.specific.preview }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+
+    </ptu-section>
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load wagtailcore_tags %}
+
+{% block content %}
+    <ptu-page-header headline='{{ page.title }}'
+                     category="Guidance"
+                     category-colour="accent"
+                     category-href="/guidance"
+    >
+        {{ page.subtitle }}
+    </ptu-page-header>
+
+    <ptu-section class="top-padding">
+        <section class="prose">
+            {{ page.body|richtext }}
+        </section>
+    </ptu-section>
+
+    <ptu-section>
+        <section class="prose dont-nest-lists columns">
+            <ul>
+            {% for child in page.get_topic_pages %}
+                <li>
+                    <a href="{% pageurl child %}">{{ child.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        </section>
+    </ptu-section>
+{% endblock content %}

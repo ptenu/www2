@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Send us a message{% endblock %}
+
+{% block content %}
+    <ptu-page-header headline="Send us a message" category="Contact" category-href="/contact"
+                     topic="Send a message"></ptu-page-header>
+
+    {% if not complete %}
+        <ptu-section class="top-padding">
+            <article class="prose">
+                <p>You can use the form on this page to send a message to our
+                    volunteers.</p>
+                <p>
+                    We'll do our best to get back to you as soon as possible.
+                </p>
+            </article>
+        </ptu-section>
+
+        <ptu-section sidebar="right">
+            <aside class="card" slot="sidebar">
+                <p>Please do not use this form to send us a request for help.</p>
+                <p>If you need support please <a href="/help">visit our support page</a> instead.</p>
+            </aside>
+            <form action="" method="post">
+                {% csrf_token %}
+                <input name="ikey" type="text" hidden value="{{ ikey }}">
+                <ptu-fieldset label='Your name'
+                              {% if "name" in form.errors %}error-text="{{ form.errors.name.0 }}"{% endif %}>
+                    <ptu-text-input label='Full name' name='name' width='30'
+                                    initial-value="{{ form.cleaned_data.name }}"></ptu-text-input>
+                </ptu-fieldset>
+                <ptu-fieldset label="Email address" description="An address we can reach you on."
+                              {% if "email" in form.errors %}error-text="{{ form.errors.email.0 }}"{% endif %}>
+                    <ptu-text-input label="Your email address" show-label="false" inputmode="email" type="email"
+                                    name='email' width='45'
+                                    initial-value="{{ form.cleaned_data.email }}"></ptu-text-input>
+                </ptu-fieldset>
+                <ptu-fieldset label='Message' description='Write your message to us here'
+                              {% if "message" in form.errors %}error-text="{{ form.errors.message.0 }}"{% endif %}>
+                    <ptu-textarea label="Your message" maxchars='500' name='message'
+                                  rows='3'>{{ form.cleaned_data.message }}</ptu-textarea>
+                </ptu-fieldset>
+                <section>
+                    <div class="cf-turnstile" data-sitekey="0x4AAAAAAASRXdlCUTEtY2SK" data-callback="unlockForm"></div>
+                </section>
+                <footer class="top-padding">
+                    <button id="sbutton" type='submit' class='primary-button' disabled>Send message</button>
+                </footer>
+            </form>
+        </ptu-section>
+    {% else %}
+        <ptu-section class="top-padding" sidebar="right">
+            <ptu-complete headline="Message sent" status='Success' colour='green'>
+                We have received your message and will get back to you soon.
+            </ptu-complete>
+            <p>Go back to the <a href="/">Home page</a>.</p>
+        </ptu-section>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script>
+        function unlockForm() {
+            let btn = document.getElementById("sbutton")
+            btn.removeAttribute("disabled")
+        }
+    </script>
+{% endblock %}
